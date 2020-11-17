@@ -21,16 +21,18 @@
                 // Return a model that outputs an internal activation.
                 // const layer = mobilenet.getLayer('conv_pw_13_relu');
                 // return tf.model({inputs: mobilenet.inputs, outputs: layer.output});
-                return net
+                // return net
+                console.log('Model loaded')
             }
             // const modelload = tf.loadLayersModel('https://github.com/AndyMcAliley/cvae-faulted-ellipse/blob/main/tfjs_g23/model.json');
             // const modelload = await tf.loadLayersModel('tfjs_g23/model.json');
-            const modelload = loadNet()
+            // let modelload = loadNet()
+            loadNet()
             var zd = new Array(82)
             for (var i = 0; i < 82; i++) {
                 zd[i] = randn_bm()
             }
-            const m = modelload.predict(tf.tensor2d(zd, [1, 82]))
+            const m = net.predict(tf.tensor2d(zd, [1, 82]))
             console.log(m[0][0].toString())
             // Define a model for linear regression.
             // const model = tf.sequential();
