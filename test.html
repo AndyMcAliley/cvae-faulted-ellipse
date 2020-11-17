@@ -21,6 +21,7 @@
                 zd[i] = randn_bm()
             }
             var m = modelload.predict(tf.tensor2d(zd, [1, 82]))
+            console.log(m[0][0].toString())
             // Define a model for linear regression.
             const model = tf.sequential();
             model.add(tf.layers.dense({units: 1, inputShape: [1]}));
