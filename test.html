@@ -7,9 +7,21 @@
     </head> 
     <body>
         <script type="text/javascript">
-            // Define a model for linear regression.
+            // Standard Normal variate using Box-Muller transform.
+            function randn_bm() {
+                var u = 0, v = 0;
+                while(u === 0) u = Math.random(); //Converting [0,1) to (0,1)
+                while(v === 0) v = Math.random();
+                return Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
+            }
             // const modelload = tf.loadLayersModel('https://github.com/AndyMcAliley/cvae-faulted-ellipse/blob/main/tfjs_g23/model.json');
             const modelload = tf.loadLayersModel('tfjs_g23/model.json');
+            var zd = new Array(82)
+            for (var i = 0; i < 82; i++) {
+                zd[i] = randn_bm()
+            }
+            var m = modelload.predict(tf.tensor2d(zd, [1, 82]))
+            // Define a model for linear regression.
             const model = tf.sequential();
             model.add(tf.layers.dense({units: 1, inputShape: [1]}));
             
