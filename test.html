@@ -23,11 +23,12 @@
                 // return tf.model({inputs: mobilenet.inputs, outputs: layer.output});
                 // return net
                 console.log('Model loaded')
+                return net
             }
             // const modelload = tf.loadLayersModel('https://github.com/AndyMcAliley/cvae-faulted-ellipse/blob/main/tfjs_g23/model.json');
             // const modelload = await tf.loadLayersModel('tfjs_g23/model.json');
             // let modelload = loadNet()
-            loadNet()
+            const net = loadNet()
             var zd = new Array(82)
             for (var i = 0; i < 82; i++) {
                 zd[i] = randn_bm()
