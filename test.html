@@ -15,7 +15,7 @@
                 return Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
             }
             // const modelload = tf.loadLayersModel('https://github.com/AndyMcAliley/cvae-faulted-ellipse/blob/main/tfjs_g23/model.json');
-            const modelload = tf.loadLayersModel('tfjs_g23/model.json');
+            const modelload = await tf.loadLayersModel('tfjs_g23/model.json');
             var zd = new Array(82)
             for (var i = 0; i < 82; i++) {
                 zd[i] = randn_bm()
