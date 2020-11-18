@@ -14,7 +14,13 @@
                 while(v === 0) v = Math.random();
                 return Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
             }
-            
+
+            function new_z(zd) {
+                for (var i = 0; i < 50; i++) {
+                   zd[i] = randn_bm()
+                }
+            }
+
             let net;
             // load a model from within an asynchronous function
             async function loadNet() {
@@ -25,45 +31,29 @@
                 console.log('Model loaded')
                 // return net
             }
-            
+
             var predict = function(input) {
                 if (net) {
-                    net.predict(tf.tensor2d(input, [1,82])).array().then(function(output) {
-                        output = output[0];
-                        console.log(output[0].toString());
-                    });
+                    // net.predict(tf.tensor2d(input, [1,82])).array().then(function(output) {
+                    //     output = output[0];
+                    //     console.log(output[0].toString());
+                    // });
+                    var output = net.predict(tf.tensor2d(input, [1,82])).array()
+                    return output
                 } else {
                     console.log("No net yet...");
                     setTimeout(function(){predict(input)}, 100);
                 }
             }
-            // const modelload = tf.loadLayersModel('https://github.com/AndyMcAliley/cvae-faulted-ellipse/blob/main/tfjs_g23/model.json');
-            // const modelload = await tf.loadLayersModel('tfjs_g23/model.json');
-            // let modelload = loadNet()
-            // const net = loadNet()
+
             loadNet();
             var zd = new Array(82)
             for (var i = 0; i < 82; i++) {
                 zd[i] = randn_bm()
             }
-            predict(zd);
-            // const m = net.predict(tf.tensor2d(zd, [1, 82]))
-            // console.log(m[0][0].toString())
-            // Define a model for linear regression.
-            // const model = tf.sequential();
-            // model.add(tf.layers.dense({units: 1, inputShape: [1]}));
-            
-            // model.compile({loss: 'meanSquaredError', optimizer: 'sgd'});
-            
-            // Generate some synthetic data for training.
-            // const xs = tf.tensor2d([1, 2, 3, 4], [4, 1]);
-            // const ys = tf.tensor2d([1, 3, 5, 7], [4, 1]);
-            
-            // Train the model using the data.
-            // model.fit(xs, ys, {epochs: 10}).then(() => {
-              // Use the model to do inference on a data point the model hasn't seen before:
-              // model.predict(tf.tensor2d([5], [1, 1])).print();
-              // Open the browser devtools to see the output
-            // });
+
+            output = predict(zd);
+            console.log(output[i])
+
         </script>
 
