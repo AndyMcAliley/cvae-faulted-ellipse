@@ -18,7 +18,7 @@
             let net;
             // load a model from within an asynchronous function
             async function loadNet() {
-                const net = await tf.loadLayersModel('tfjs_g23/model.json');
+                net = await tf.loadLayersModel('tfjs_g23/model.json');
                 // Return a model that outputs an internal activation.
                 // const layer = mobilenet.getLayer('conv_pw_13_relu');
                 // return tf.model({inputs: mobilenet.inputs, outputs: layer.output});
