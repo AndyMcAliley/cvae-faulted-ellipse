@@ -32,32 +32,34 @@
                 // return net
             }
 
-            var predict = function(input) {
-                if (net) {
-                    // net.predict(tf.tensor2d(input, [1,82])).array().then(function(output) {
-                    //     output = output[0];
-                    //     console.log(output[0].toString());
-                    // });
-                    var output = net.predict(tf.tensor2d(input, [1,82])).array()
-                    return output[0]
-                } else {
-                    console.log("No net yet...");
-                    setTimeout(function(){predict(input)}, 100);
-                }
-            }
-
             loadNet();
             var zd = new Array(82);
             for (var i = 0; i < 82; i++) {
                 zd[i] = randn_bm();
             }
 
-            // output = predict(zd);
-            predict(zd).then(function(output) {
-                console.log(output[0])
-            });
+            var predict = function(input) {
+                if (net) {
+                    net.predict(tf.tensor2d(input, [1,82])).array().then(function(output) {
+                        output = output[0];
+                        console.log(output[0].toString());
+                    });
+                    // var output = net.predict(tf.tensor2d(input, [1,82])).array()
+                    // return output[0]
+                } else {
+                    console.log("No net yet...");
+                    setTimeout(function(){predict(input)}, 100);
+                }
+            }
+            predict(zd);
 
+            // output = predict(zd);
             // console.log(output[0])
+
+            // predict(zd).then(function(output) {
+                // console.log(output[0])
+            // });
+
 
         </script>
 
