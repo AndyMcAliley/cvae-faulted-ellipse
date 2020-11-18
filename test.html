@@ -47,13 +47,17 @@
             }
 
             loadNet();
-            var zd = new Array(82)
+            var zd = new Array(82);
             for (var i = 0; i < 82; i++) {
-                zd[i] = randn_bm()
+                zd[i] = randn_bm();
             }
 
-            output = predict(zd);
-            console.log(output[0])
+            // output = predict(zd);
+            predict(zd).then(function(output) {
+                console.log(output[0])
+            )};
+
+            // console.log(output[0])
 
         </script>
 
