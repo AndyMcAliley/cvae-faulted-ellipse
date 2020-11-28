@@ -66,9 +66,16 @@ var predict = function(input) {
             var m = data['image']
             console.log(m[0].length.toString())
             console.log(output.length.toString())
-            for (var i = 0; i < m[0].length; i++) {
-                m[0][i] = output[i];
+            var ij = 0;
+            for (var i = 0; i < output.length; i++) {
+                for (var j = 0; j < output[i].length; j++){
+                    ij = i*output[i].length + j;
+                    m[0][ij] = output[i][j];
+                }
             }
+            // for (var i = 0; i < m[0].length; i++) {
+                // m[0][i] = output[i];
+            // }
             // m[0] = output[0];
             // m[1] = output[1];
             source.change.emit();
