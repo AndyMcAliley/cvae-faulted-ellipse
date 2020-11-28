@@ -28,17 +28,17 @@ async function loadNet() {
     console.log('Model loaded')
     // return net
 }
-var predict = function(input) {
-    if (net) {
-        net.predict(tf.tensor2d(input, [1,82])).array().then(function(output) {
-            output = output[0];
-            console.log(output[0].toString());
-        });
-    } else {
-        console.log("No net yet...");
-        setTimeout(function(){predict(input)}, 100);
-    }
-}
+// var predict = function(input) {
+//     if (net) {
+//         net.predict(tf.tensor2d(input, [1,82])).array().then(function(output) {
+//             output = output[0];
+//             console.log(output[0].toString());
+//         });
+//     } else {
+//         console.log("No net yet...");
+//         setTimeout(function(){predict(input)}, 100);
+//     }
+// }
 loadNet();
 // predict(zd);
 
