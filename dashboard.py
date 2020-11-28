@@ -75,6 +75,7 @@ var predict = function(input) {
 predict(zd);
 
 '''
+# m=output; is most iffy
 
 
 
