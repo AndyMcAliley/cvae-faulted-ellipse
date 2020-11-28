@@ -54,8 +54,6 @@ p.image(image='image', x=0, y=-800, dw=800, dh=800, color_mapper=color_mapper,
 p.grid.grid_line_color = None
 
 jscode = '''
-var data = source.data;
-var m = data['image']
 var f = cb_obj.value;
 zd[0] = f;
 
@@ -64,6 +62,8 @@ var predict = function(input) {
         net.predict(tf.tensor2d(input, [1,82])).array().then(function(output) {
             output = output[0];
             console.log(output[0].toString());
+            var data = source.data;
+            var m = data['image']
             m = output;
             source.change.emit();
         });
@@ -73,7 +73,6 @@ var predict = function(input) {
     }
 }
 predict(zd);
-
 '''
 # m=output; is most iffy
 
