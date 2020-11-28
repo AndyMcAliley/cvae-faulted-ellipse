@@ -56,7 +56,7 @@ p.grid.grid_line_color = None
 jscode = '''
 var data = source.data;
 var f = cb_obj.value;
-zd[0] = f;
+zd[48] = f;
 
 var predict = function(input) {
     if (net) {
@@ -64,10 +64,10 @@ var predict = function(input) {
             output = output[0];
             console.log(output[0].toString());
             var m = data['image']
-            console.log(m.length.toString())
+            console.log(m[0].length.toString())
             console.log(output.length.toString())
-            for (var i = 0; i < m.length; i++) {
-                m[i] = output[i];
+            for (var i = 0; i < m[0].length; i++) {
+                m[0][i] = output[i];
             }
             // m[0] = output[0];
             // m[1] = output[1];
