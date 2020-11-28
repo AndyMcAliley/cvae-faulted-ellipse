@@ -64,7 +64,7 @@ var predict = function(input) {
             console.log(output[0].toString());
             var data = source.data;
             var m = data['image']
-            m = output;
+            m[0] = output[0];
             source.change.emit();
         });
     } else {
