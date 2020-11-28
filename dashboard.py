@@ -54,6 +54,7 @@ p.image(image='image', x=0, y=-800, dw=800, dh=800, color_mapper=color_mapper,
 p.grid.grid_line_color = None
 
 jscode = '''
+var data = source.data;
 var f = cb_obj.value;
 zd[0] = f;
 
@@ -62,9 +63,14 @@ var predict = function(input) {
         net.predict(tf.tensor2d(input, [1,82])).array().then(function(output) {
             output = output[0];
             console.log(output[0].toString());
-            var data = source.data;
             var m = data['image']
-            m[0] = output[0];
+            console.log(m.length.toString())
+            console.log(output.length.toString())
+            for (var i = 0; i < m.length; i++) {
+                m[i] = output[i];
+            }
+            // m[0] = output[0];
+            // m[1] = output[1];
             source.change.emit();
         });
     } else {
@@ -75,7 +81,6 @@ var predict = function(input) {
 predict(zd);
 '''
 # m=output; is most iffy
-
 
 
 # pure bokeh
