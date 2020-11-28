@@ -12,6 +12,11 @@ function new_z(zd) {
     }
 }
 
+var zd = new Array(82)
+for (var i = 0; i < 82; i++) {
+    zd[i] = randn_bm()
+}
+
 let net;
 
 // load a model from within an asynchronous function
@@ -23,7 +28,6 @@ async function loadNet() {
     console.log('Model loaded')
     // return net
 }
-
 var predict = function(input) {
     if (net) {
         net.predict(tf.tensor2d(input, [1,82])).array().then(function(output) {
@@ -36,9 +40,5 @@ var predict = function(input) {
     }
 }
 loadNet();
-var zd = new Array(82)
-for (var i = 0; i < 82; i++) {
-    zd[i] = randn_bm()
-}
 // predict(zd);
 
