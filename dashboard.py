@@ -9,7 +9,7 @@ import numpy as np
 import bokeh
 from bokeh.layouts import column, row
 from bokeh.plotting import figure, output_file, show
-from bokeh.models import LinearColorMapper, ColumnDataSource, CustomJS, Slider
+from bokeh.models import LinearColorMapper, ColumnDataSource, CustomJS, Slider, ColorBar
 from bokeh.palettes import viridis
 # import panel
 
@@ -48,10 +48,12 @@ m = np.arange(1024).reshape(32,32)/1024*6-3
 source = ColumnDataSource(data=dict(image=[m]))
 p = figure()
 p.x_range.range_padding = p.y_range.range_padding = 0
-color_mapper = LinearColorMapper(viridis(256))
+color_mapper = LinearColorMapper(viridis(256), low=-1, high=1)
 p.image(image='image', x=0, y=-800, dw=800, dh=800, color_mapper=color_mapper,
         source=source)
 p.grid.grid_line_color = None
+color_bar = ColorBar(color_mapper=color_mapper)
+p.add_layout(color_bar, 'right')
 
 jscode = '''
 var data = source.data;
@@ -63,14 +65,19 @@ var predict = function(input) {
         net.predict(tf.tensor2d(input, [1,82])).array().then(function(output) {
             output = output[0];
             console.log(output[0].toString());
-            var m = data['image']
+            var m = data['image'];
             console.log(m[0].length.toString())
             console.log(output.length.toString())
+            var ni = output.length;
+            // Assume all output[i] are of equal length
+            var nj = output[0].length;
             var ij = 0;
-            for (var i = 0; i < output.length; i++) {
-                for (var j = 0; j < output[i].length; j++){
+            var im = 0;
+            for (var i = 0; i < ni; i++) {
+                for (var j = 0; j < nj; j++){
                     ij = i*output[i].length + j;
-                    m[0][ij] = output[i][j];
+                    im = ni*nj - ij - 1
+                    m[0][im] = output[i][j];
                 }
             }
             // for (var i = 0; i < m[0].length; i++) {
