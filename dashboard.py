@@ -121,6 +121,19 @@ setting an element of m directly seems to work!
 The plot is updated accordingly.
 '''
 
+n_sliders = 10
+sliders = []
+for i_slider in range(n_sliders):
+    slider = Slider(start=-3, end=3, value=0, step=0.1, title=f'z{i_slider}')
+    # pure bokeh
+    slider_change = CustomJS(
+        args=dict(source=source, iz=i_slider),
+        code=jscode
+        )
+
+    slider.js_on_change('value', slider_change)
+    sliders.append(slider)
+
 slider1 = Slider(start=-3, end=3, value=0, step=0.1, title='z1')
 slider1.js_on_change('value', slider_change)
 layout = row(p,slider1)
