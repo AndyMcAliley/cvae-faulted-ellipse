@@ -126,6 +126,7 @@ G = np.load('sensitivity.npy')
 
 jscode = '''
 var model = model_source.data;
+var y_true = data_source["data"]["y_true"];
 var y_pre = data_source["data"]["y_pre"];
 var f = cb_obj.value;
 zd[iz] = f;
@@ -146,7 +147,7 @@ var predict = function(input) {
             for (var i = 0; i < ni; i++) {
                 for (var j = 0; j < nj; j++){
                     ij = i*output[i].length + j;
-                    im = ni*nj - ij - 1
+                    im = ni*nj - ij - 1;
                     m[0][im] = output[i][j];
                 }
             }
@@ -159,6 +160,8 @@ var predict = function(input) {
             // console.log(math.size(m_matrix));
             const d_pre = math.multiply(G,m_matrix);
             for (var ii = 0; ii < nd; ii++) {
+                // replot true data
+                y_true[ii] = zd[ii+50];
                 y_pre[ii] = math.subset(d_pre, math.index(ii));
             }
             data_source.change.emit();
