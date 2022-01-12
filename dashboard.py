@@ -171,6 +171,29 @@ var predict = function(input) {
 predict(zd);
 '''
 
+test_jscode="""
+var model = model_source.data;
+var m = model['image']
+var y_pre = data_source["data"]["y_pre"];
+const nd = y_pre.length;
+var f = cb_obj.value;
+m[0][1024-iz-1] = f;
+model_source.change.emit();
+//
+//
+// transform model from tanh to density
+// m/2.25 + 2.4
+const m_matrix = math.add(math.divide(math.matrix(Array.from(m[0])), 2.25), 2.4);
+// console.log(math.size(G));
+// console.log(math.size(m_matrix));
+const d_pre = math.multiply(G,m_matrix);
+for (var ii = 0; ii < nd; ii++) {
+    y_pre[ii] = math.subset(d_pre, math.index(ii));
+}
+data_source.change.emit();
+// debugger
+"""
+
 
 # pure bokeh
 iz_sort = [48, 19, 24, 49, 34, 41, 37, 39, 45, 18, 27, 47, 28, 17, 38, 43, 13,
@@ -193,29 +216,8 @@ sliders = []
 for ii,iz in enumerate(iz_sort[:10]):
     slider_change = CustomJS(
         args=dict(model_source=cds_model, data_source=cds_data, iz=iz),
-        # code=jscode
-        code=""" 
-        var model = model_source.data;
-        var m = model['image']
-        var y_pre = data_source["data"]["y_pre"];
-        const nd = y_pre.length;
-        var f = cb_obj.value;
-        m[0][1024-iz-1] = f;
-        model_source.change.emit();
-        //
-        //
-        // transform model from tanh to density
-        // m/2.25 + 2.4
-        const m_matrix = math.add(math.divide(math.matrix(Array.from(m[0])), 2.25), 2.4);
-        // console.log(math.size(G));
-        // console.log(math.size(m_matrix));
-        const d_pre = math.multiply(G,m_matrix);
-        for (var ii = 0; ii < nd; ii++) {
-            y_pre[ii] = math.subset(d_pre, math.index(ii));
-        }
-        data_source.change.emit();
-        // debugger
-        """
+        code=jscode
+        # code=test_jscode
         )
     slider1 = Slider(start=-3, end=3, value=0, step=0.1, title='z{}'.format(ii+1))
     slider1.js_on_change('value', slider_change)
