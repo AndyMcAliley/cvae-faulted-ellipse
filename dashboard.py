@@ -135,10 +135,10 @@ var predict = function(input) {
     if (net) {
         net.predict(tf.tensor2d(input, [1,82])).array().then(function(output) {
             output = output[0];
-            console.log(output[0].toString());
+            // console.log(output[0].toString());
             var m = model['image'];
-            console.log(m[0].length.toString())
-            console.log(output.length.toString())
+            // console.log(m[0].length.toString())
+            // console.log(output.length.toString())
             var ni = output.length;
             // Assume all output[i] are of equal length
             var nj = output[0].length;
@@ -146,8 +146,9 @@ var predict = function(input) {
             var im = 0;
             for (var i = 0; i < ni; i++) {
                 for (var j = 0; j < nj; j++){
-                    ij = i*output[i].length + j;
-                    im = ni*nj - ij - 1;
+                    // ij = i*output[i].length + j;
+                    // im = ni*nj - ij - 1;
+                    im = j + (ni - i - 1)*nj
                     m[0][im] = output[i][j];
                 }
             }
