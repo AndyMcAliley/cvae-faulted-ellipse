@@ -223,7 +223,7 @@ for ii,iz in enumerate(iz_sort[:10]):
         code=jscode
         # code=test_jscode
         )
-    slider1 = Slider(start=-3, end=3, value=0, step=0.1, title='z{}'.format(ii+1))
+    slider1 = Slider(start=-2, end=2, value=0, step=0.1, title='z{}'.format(ii+1))
     slider1.js_on_change('value', slider_change)
     sliders.append(slider1)
 layout = row(column(pd,row(pm,pmcb)),column(sliders))
